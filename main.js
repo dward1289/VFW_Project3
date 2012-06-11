@@ -60,8 +60,16 @@ window.addEventListener("DOMContentLoaded", function(){
 			
 	
 	//Store data function
-	var storeData = function () {
-		var id = Math.floor(Math.random()*10000000001);
+	var storeData = function (key) {
+		//No key = new key
+		if(!key){
+			var id = Math.floor(Math.random()*10000000001);
+			}
+			else{
+				//Existing key will be saved when edited
+				id = key;
+				}
+				
 		//Get all form field values and store in object
 		//Object properties contain array w/from label and input value
 		checkedbox();
@@ -85,6 +93,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		if(localStorage.length === 0) {
 			alert("There is no data in storage.");
 			}
+			
 		//Write data from local storage to browser
 		var makeDiv = document.createElement("div");
 		makeDiv.setAttribute("id", "items");
@@ -97,6 +106,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		makeList.appendChild(makeLi);
 		var key = localStorage.key(i);
 		var value = localStorage.getItem(key);
+		
 		//Convert string from local to object
 		var obj = JSON.parse(value);
 		var makeSubList = document.createElement("ul");
@@ -131,6 +141,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		deleteIt.href = "#";
 		deleteIt.key = key;
 		var deleteTxt = "Delete Task";
+		
 		//deleteIt.addEventListener("click", deleteItem);
 		deleteIt.innerHTML= deleteTxt;
 		linksLi.appendChild(deleteIt);
@@ -160,9 +171,75 @@ window.addEventListener("DOMContentLoaded", function(){
 		if(item.category[1] == "school") {
 			elId("school").setAttribute("checked", "checked");
 					}
-		}
-	
 		
+		
+		//Remove listener from submit button.
+		submit.removeEventListener("click", storeData);
+		
+		//Change submit value to edit
+		elId("submit").value = "Edit Task";
+		var editSubmit = elId("submit");
+		
+		//Save key value in this function as property of editSubmit, use that value when save edited data.
+		editSubmit.addEventListener("click", validate);
+		editSubmit.key = this.key;
+	}
+	var validate = function (e) {
+		//Define elements
+		var getPriority = elId("priorities");
+		var getNot = elId("taskName");
+		var getStart = elId("taskDate");
+		var getEnd = elId("taskEnd");
+		
+		//Reset error messages
+		errMsg.innerHTML = "";
+		getPriority.style.border = "1px solid black";
+		getNot.style.border = "1px solid black";
+		getStart.style.border = "1px solid black";
+		getEnd.style.border = "1px solid black";
+
+
+		//Error messages array
+		var message = [];
+		
+		//Priority validate
+		if(getPriority.value === "--Choose Priority Level--") {
+			var priorityError = "Please select priority level.";
+			getPriority.style.border = "1px solid red";
+			message.push(priorityError);
+		}
+		//Name of Task validate
+		if(getNot.value === "") {
+			var notError = "Please enter the name of task.";
+			getNot.style.border = "1px solid red";
+			message.push(notError);
+		}
+		//Start date validate
+		if(getStart.value === "") {
+			var startError = "Please select a start date.";
+			getStart.style.border = "1px solid red";
+			message.push(startError);
+		}
+		//End date validate
+		if(getEnd.value === "") {
+			var endError = "Please select an ending date.";
+			getEnd.style.border = "1px solid red";
+			message.push(endError);
+		}
+		//Explains errors
+		if(message.length >=1) {
+			for(var i = 0, j = message. length; i < j; i++){
+				var txt = document.createElement("li");
+				txt.innerHTML = message[i];
+				errMsg.appendChild(txt);
+			}
+		e.preventDefault();
+		return false;	
+		}
+		else{
+			storeData(this.key);
+			}		
+	}
 	
 	var clearLocal = function () {
 		if(localStorage.length === 0){
@@ -178,8 +255,9 @@ window.addEventListener("DOMContentLoaded", function(){
 	}
 	
 	//Variable defaults
-	var priorityGroup = ["High","Medium","Low"];
+	var priorityGroup = ["--Choose Priority Level--","High","Medium","Low"];
 	makeDrop();
+	errMsg = elId("errors");
 	
 	//Set Link & Submit Click Events
 	var displayLink = elId("displayData");
@@ -187,6 +265,6 @@ window.addEventListener("DOMContentLoaded", function(){
 	var clearLink = elId("clear");
 	clearLink.addEventListener("click", clearLocal);
 	var submit = elId("submit");
-	submit.addEventListener("click", storeData);
+	submit.addEventListener("click", validate);
 	
 });

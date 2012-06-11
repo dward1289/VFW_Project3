@@ -74,10 +74,6 @@ legend.field{
 fieldset{
 	border-color:#A6A6A6;
 	}
-	
-input{
-	outline:#A6A6A6 solid;
-	}
 
 /*Select Alert Bar*/
 input.bar{
