@@ -100,6 +100,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		document.body.appendChild(makeDiv);
 		for(var i=0, len=localStorage.length; i<len; i++) {
 		var makeLi = document.createElement("li");
+		var linksLi = document.createElement("li");
 		makeList.appendChild(makeLi);
 		var key = localStorage.key(i);
 		var value = localStorage.getItem(key);
@@ -112,7 +113,9 @@ window.addEventListener("DOMContentLoaded", function(){
 			makeSubList.appendChild(makeSubLi);
 			var optSubText = obj[r][0]+" "+obj[r][1];
 			makeSubLi.innerHTML = optSubText;
+			makeSubList.appendChild(linksLi);
 			}
+			//makeItemLinks(); //Create. edit and delete buttons for items in local storage
 		}
 	}
 	
