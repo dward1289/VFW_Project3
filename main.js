@@ -27,22 +27,15 @@ window.addEventListener("DOMContentLoaded", function(){
 	if(elId("home").checked) {
 		categoryValue = elId("home").value;
 		}
-		else {
-			categoryValue = "No"
-			}
-	if(elId("business").checked) {
+	if(elId("business").checked){
 		categoryValue = elId("business").value;
-		}
-		else {
-			categoryValue = "No"
-			}
+			}	
 	if(elId("school").checked) {
 		categoryValue = elId("school").value;
-		}
-		else {
-			categoryValue = "No"
 			}
-	}
+		}
+	
+	
 	
 	var toggleContr = function (n) {
 		switch(n) {
@@ -53,7 +46,7 @@ window.addEventListener("DOMContentLoaded", function(){
 				elId("addOne").style.display = "inline";
 				break;
 			case "off":
-				elId("form").style.display = "block";
+				elId("taskForm").style.display = "block";
 				elId("clear").style.display = "inline";
 				elId("displayData").style.display = "inline";
 				elId("addOne").style.display = "none";
@@ -121,7 +114,7 @@ window.addEventListener("DOMContentLoaded", function(){
 	//Make edit and delete buttons for each stored item
 	var makeItemLinks = function (key, linksLi) {
 		//add edit single item link
-		var edit = document.createElement("a");
+		var edit = document.createElement('a');
 		edit.href = "#";
 		edit.key = key;
 		var editTxt = "Edit task";
@@ -134,14 +127,41 @@ window.addEventListener("DOMContentLoaded", function(){
 		linksLi.appendChild(breakIt);
 		
 		//add delete single link
-		var deleteIt = document.createElement("a");
+		var deleteIt = document.createElement('a');
 		deleteIt.href = "#";
 		deleteIt.key = key;
 		var deleteTxt = "Delete Task";
-		deleteIt.addEventListener("click", deleteItem);
+		//deleteIt.addEventListener("click", deleteItem);
 		deleteIt.innerHTML= deleteTxt;
 		linksLi.appendChild(deleteIt);
 		}
+	
+	var editItem = function () {
+		//Grab the data first.
+		var value = localStorage.getItem(this.key);
+		var item = JSON.parse(value);
+		
+		//Show form again
+		toggleContr("off");
+		
+		//Populate with current
+		elId("taskName").value = item.name[1];
+		elId("priorities").value = item.priorityLevel[1];
+		elId("taskDate").value = item.startUp[1];
+		elId("taskEnd").value = item.ending[1];
+		elId("alertWay").value = item.alertOption[1];
+		elId("notes").value = item.note[1];
+		if(item.category[1] == "home") {
+			elId("home").setAttribute("checked", "checked");
+			}
+		if(item.category[1] == "business") {
+			elId("business").setAttribute("checked", "checked");
+					}
+		if(item.category[1] == "school") {
+			elId("school").setAttribute("checked", "checked");
+					}
+		}
+	
 		
 	
 	var clearLocal = function () {
@@ -168,6 +188,5 @@ window.addEventListener("DOMContentLoaded", function(){
 	clearLink.addEventListener("click", clearLocal);
 	var submit = elId("submit");
 	submit.addEventListener("click", storeData);
-	var categoryValue = "No";
 	
 });
