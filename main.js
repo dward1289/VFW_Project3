@@ -87,6 +87,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		alert("Task Saved!");
 	}
 	
+	
 	//Get data function
 	var getData = function () {
 		toggleContr("on");
@@ -142,7 +143,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		deleteIt.key = key;
 		var deleteTxt = "Delete Task";
 		
-		//deleteIt.addEventListener("click", deleteItem);
+		deleteIt.addEventListener("click", deleteItem);
 		deleteIt.innerHTML= deleteTxt;
 		linksLi.appendChild(deleteIt);
 		}
@@ -174,7 +175,7 @@ window.addEventListener("DOMContentLoaded", function(){
 		
 		
 		//Remove listener from submit button.
-		submit.removeEventListener("click", storeData);
+		submit1.removeEventListener("click", storeData);
 		
 		//Change submit value to edit
 		elId("submit").value = "Edit Task";
@@ -241,6 +242,19 @@ window.addEventListener("DOMContentLoaded", function(){
 			}		
 	}
 	
+	var deleteItem = function () {
+		var ask = confirm("Are you sure you want to delete this content?");
+		alert("Task deleted.");
+		if(ask){
+			localStorage.removeItem(this.key);
+			window.loaction.reload();
+		}
+		else{
+			alert("Task not deleted.");
+			window.location.reload();
+			return false;
+		}
+	}
 	var clearLocal = function () {
 		if(localStorage.length === 0){
 			alert("There is no data to clear.")
@@ -264,7 +278,7 @@ window.addEventListener("DOMContentLoaded", function(){
 	displayLink.addEventListener("click", getData);
 	var clearLink = elId("clear");
 	clearLink.addEventListener("click", clearLocal);
-	var submit = elId("submit");
-	submit.addEventListener("click", validate);
+	var submit1 = elId("submit");
+	submit1.addEventListener("click", validate);
 	
 });
