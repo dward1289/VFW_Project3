@@ -206,25 +206,25 @@ window.addEventListener("DOMContentLoaded", function(){
 		
 		//Priority validate
 		if(getPriority.value === "--Choose Priority Level--") {
-			var priorityError = "Please select priority level.";
+			var priorityError = "Please select priority level.".fontcolor("red").bold();
 			getPriority.style.border = "2px solid red";
 			message.push(priorityError);
 		}
 		//Name of Task validate
 		if(getNot.value === "") {
-			var notError = "Please enter the name of task.";
+			var notError = "Please enter the name of task.".fontcolor("red").bold();
 			getNot.style.border = "2px solid red";
 			message.push(notError);
 		}
 		//Start date validate
 		if(getStart.value === "") {
-			var startError = "Please select a start date.";
+			var startError = "Please select a start date.".fontcolor("red").bold();
 			getStart.style.border = "2px solid red";
 			message.push(startError);
 		}
 		//End date validate
 		if(getEnd.value === "") {
-			var endError = "Please select an ending date.";
+			var endError = "Please select an ending date.".fontcolor("red").bold();
 			getEnd.style.border = "2px solid red";
 			message.push(endError);
 		}
