@@ -178,7 +178,8 @@ window.addEventListener("DOMContentLoaded", function(){
 		submit1.removeEventListener("click", storeData);
 		
 		//Change submit value to edit
-		elId("submit").value = "Edit Task";
+		//Found helpful code for button at: http://www.permadi.com/tutorial/jsInnerHTMLDOM/index.html
+		elId("submit").childNodes[0].nodeValue = "Edit Task";
 		var editSubmit = elId("submit");
 		
 		//Save key value in this function as property of editSubmit, use that value when save edited data.
@@ -206,25 +207,25 @@ window.addEventListener("DOMContentLoaded", function(){
 		//Priority validate
 		if(getPriority.value === "--Choose Priority Level--") {
 			var priorityError = "Please select priority level.";
-			getPriority.style.border = "1px solid red";
+			getPriority.style.border = "2px solid red";
 			message.push(priorityError);
 		}
 		//Name of Task validate
 		if(getNot.value === "") {
 			var notError = "Please enter the name of task.";
-			getNot.style.border = "1px solid red";
+			getNot.style.border = "2px solid red";
 			message.push(notError);
 		}
 		//Start date validate
 		if(getStart.value === "") {
 			var startError = "Please select a start date.";
-			getStart.style.border = "1px solid red";
+			getStart.style.border = "2px solid red";
 			message.push(startError);
 		}
 		//End date validate
 		if(getEnd.value === "") {
 			var endError = "Please select an ending date.";
-			getEnd.style.border = "1px solid red";
+			getEnd.style.border = "2px solid red";
 			message.push(endError);
 		}
 		//Explains errors
@@ -243,11 +244,11 @@ window.addEventListener("DOMContentLoaded", function(){
 	}
 	
 	var deleteItem = function () {
-		var ask = confirm("Are you sure you want to delete this content?");
+		var ask = confirm("Are you sure you want to delete this task?");
 		alert("Task deleted.");
 		if(ask){
 			localStorage.removeItem(this.key);
-			window.loaction.reload();
+			window.location.reload();
 		}
 		else{
 			alert("Task not deleted.");
